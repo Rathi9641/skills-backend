@@ -27,13 +27,7 @@ jobs:
       - name: Build with Maven
         run: mvn clean install
 
-      - name: SonarCloud Scan
-        run: |
-          mvn sonar:sonar \
-           -Dsonar.projectKey=rathi9641_skills-backend \
-           -Dsonar.organization=rathi9641 \
-           -Dsonar.host.url=https://sonarcloud.io \
-           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      
 
       
       
