@@ -74,5 +74,44 @@ class TopicServiceTest {
 
         Mockito.verify(repo).deleteById(1L);
     }
+    @Test
+    void testGetAllTopicsEmpty() {
+
+        Mockito.when(repo.findAll()).thenReturn(List.of());
+
+        List<TopicDTO> result = service.getAllTopics();
+
+        assertTrue(result.isEmpty());
+    }
+    @Test
+    void testUpdateTopicNotFound() {
+
+        TopicDTO dto = new TopicDTO();
+        dto.setName("Test");
+        dto.setDescription("Test");
+
+        Mockito.when(repo.findById(1L)).thenReturn(java.util.Optional.empty());
+
+        assertThrows(RuntimeException.class, () -> {
+            service.updateTopic(1L, dto);
+        });
+    }
+    @Test
+    void testGetMultipleTopics() {
+
+        Topic t1 = new Topic();
+        t1.setName("Java");
+        t1.setDescription("Backend");
+
+        Topic t2 = new Topic();
+        t2.setName("React");
+        t2.setDescription("Frontend");
+
+        Mockito.when(repo.findAll()).thenReturn(List.of(t1, t2));
+
+        List<TopicDTO> result = service.getAllTopics();
+
+        assertEquals(2, result.size());
+    }
 
 }
