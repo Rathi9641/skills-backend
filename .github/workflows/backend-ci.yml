@@ -24,7 +24,7 @@ jobs:
 
       - name: Sonar Scan
         run: mvn sonar:sonar \
-          -Dsonar.projectKey=skills-backend \
+          -Dsonar.projectKey=Rathi9641_skills-backend \
           -Dsonar.organization=rathi9641 \
           -Dsonar.host.url=https://sonarcloud.io \
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
