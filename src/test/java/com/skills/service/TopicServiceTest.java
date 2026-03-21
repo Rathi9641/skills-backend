@@ -48,4 +48,31 @@ class TopicServiceTest {
         assertEquals(1, result.size());
         assertEquals("Spring", result.get(0).getName());
     }
+
+        @Test
+        void testUpdateTopic() {
+
+            Topic existing = new Topic();
+            existing.setName("Old");
+            existing.setDescription("Old Desc");
+
+            TopicDTO dto = new TopicDTO();
+            dto.setName("New");
+            dto.setDescription("New Desc");
+
+            Mockito.when(repo.findById(1L)).thenReturn(java.util.Optional.of(existing));
+            Mockito.when(repo.save(Mockito.any())).thenReturn(existing);
+
+            TopicDTO result = service.updateTopic(1L, dto);
+
+            assertEquals("New", result.getName());
+        }
+    @Test
+    void testDeleteTopic() {
+
+        service.deleteTopic(1L);
+
+        Mockito.verify(repo).deleteById(1L);
+    }
+
 }
