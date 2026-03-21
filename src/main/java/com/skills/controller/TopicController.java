@@ -1,7 +1,6 @@
 package com.skills.controller;
 
 import com.skills.dto.TopicDTO;
-import com.skills.model.Topic;
 import com.skills.service.TopicService;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,19 +17,18 @@ public class TopicController {
     }
 
     @GetMapping
-    public List<Topic> getAllTopics() {
+    public List<TopicDTO> getAllTopics() {   // ✅ FIXED
         return service.getAllTopics();
     }
 
     @PostMapping("/add")
-    public Topic addTopic(@RequestBody TopicDTO dto) {
-        return service.addTopic(dto);  // ✅ correct
+    public TopicDTO addTopic(@RequestBody TopicDTO dto) {   // ✅ FIXED
+        return service.addTopic(dto);
     }
 
-
     @PutMapping("/{id}")
-    public Topic updateTopic(@PathVariable Long id, @RequestBody Topic topic) {
-        return service.updateTopic(id, topic);
+    public TopicDTO updateTopic(@PathVariable Long id, @RequestBody TopicDTO dto) {   // ✅ FIXED
+        return service.updateTopic(id, dto);
     }
 
     @DeleteMapping("/{id}")

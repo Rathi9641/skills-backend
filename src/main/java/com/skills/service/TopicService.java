@@ -16,25 +16,54 @@ public class TopicService {
         this.repo = repo;
     }
 
-    public List<Topic> getAllTopics() {
-        return repo.findAll();
+    // ✅ GET ALL
+    public List<TopicDTO> getAllTopics() {
+
+        List<Topic> topics = repo.findAll();
+
+        return topics.stream().map(t -> {
+            TopicDTO dto = new TopicDTO();
+            dto.setName(t.getName());
+            dto.setDescription(t.getDescription());
+            return dto;
+        }).toList();
     }
 
-    public Topic addTopic(TopicDTO dto) {
+    // ✅ ADD
+    public TopicDTO addTopic(TopicDTO dto) {
 
         Topic topic = new Topic();
         topic.setName(dto.getName());
         topic.setDescription(dto.getDescription());
 
-        return repo.save(topic);
+        Topic saved = repo.save(topic);
+
+        TopicDTO result = new TopicDTO();
+        result.setName(saved.getName());
+        result.setDescription(saved.getDescription());
+
+        return result;
     }
 
+    // ✅ UPDATE
+    public TopicDTO updateTopic(Long id, TopicDTO dto) {
 
-    public Topic updateTopic(Long id, Topic topic) {
-        topic.setId(id);
-        return repo.save(topic);
+        Topic topic = repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Topic not found"));
+
+        topic.setName(dto.getName());
+        topic.setDescription(dto.getDescription());
+
+        Topic updated = repo.save(topic);
+
+        TopicDTO result = new TopicDTO();
+        result.setName(updated.getName());
+        result.setDescription(updated.getDescription());
+
+        return result;
     }
 
+    // ✅ DELETE
     public void deleteTopic(Long id) {
         repo.deleteById(id);
     }
