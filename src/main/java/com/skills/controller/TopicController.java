@@ -1,5 +1,6 @@
 package com.skills.controller;
 
+import com.skills.dto.TopicDTO;
 import com.skills.model.Topic;
 import com.skills.service.TopicService;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +22,11 @@ public class TopicController {
         return service.getAllTopics();
     }
 
-    @PostMapping
-    public Topic addTopic(@RequestBody Topic topic) {
-        return service.addTopic(topic);
+    @PostMapping("/add")
+    public Topic addTopic(@RequestBody TopicDTO dto) {
+        return service.addTopic(dto);  // ✅ correct
     }
+
 
     @PutMapping("/{id}")
     public Topic updateTopic(@PathVariable Long id, @RequestBody Topic topic) {
